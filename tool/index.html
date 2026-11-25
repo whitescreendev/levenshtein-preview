@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Fancy Text Generator &amp; Font Generator | Levenshtein.net</title><meta name="description" content="Transform text into bold, monospace and fullwidth Unicode characters."><style>*{box-sizing:border-box}body{margin:0;color:#172033;background:#fff;font:16px/1.65 system-ui,sans-serif}a{color:#1746bd;text-underline-offset:3px}header{border-bottom:1px solid #dce3ed}nav,main,footer{max-width:1100px;margin:auto;padding:1rem 1.25rem}nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}.brand{font-size:1.3rem;font-weight:750;text-decoration:none;color:#172033}.brand span{color:#1746bd}.navlinks{display:flex;gap:1.25rem}main{padding-block:2rem 4rem}h1,h2,h3{line-height:1.2;letter-spacing:-.025em}h1{font-size:clamp(2rem,5vw,3.5rem);max-width:22ch}h2{font-size:1.6rem}p{max-width:72ch}.eyebrow{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#1746bd;font-weight:700}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1rem}.panel{border:1px solid #dce3ed;border-radius:12px;padding:1.25rem;background:#f8fafc}.button,button{display:inline-block;border:1px solid #1746bd;border-radius:8px;padding:.65rem 1rem;background:#1746bd;color:white;font:inherit;cursor:pointer;text-decoration:none}textarea{width:100%;min-height:100px;padding:1rem;border:1px solid #75839a;border-radius:8px;font:inherit}label{display:block;font-weight:650;margin-bottom:.4rem}.result{display:flex;justify-content:space-between;align-items:center;gap:1rem;overflow-wrap:anywhere}.result output{min-width:0}.muted,footer{color:#526176}footer{border-top:1px solid #dce3ed}.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;background:white;z-index:2}:focus-visible{outline:3px solid #d97706;outline-offset:3px}article{max-width:760px}code{font-family:monospace}.actions{display:flex;gap:.75rem;flex-wrap:wrap}@media(max-width:480px){.result{align-items:flex-start}.navlinks{gap:.8rem}main{padding-top:1rem}}
+
+.workspace{display:grid;gap:.75rem;min-width:0}
+.workspace textarea{box-sizing:border-box;width:100%;resize:vertical;font:inherit;padding:1rem;border:1px solid #94a3b8;border-radius:.75rem;background:transparent;color:inherit}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:1rem}
+.style-card{display:grid;gap:.75rem;min-width:0;border:1px solid #94a3b8;border-radius:.75rem;padding:1rem}
+.style-card h2{font-size:1rem;margin:0}
+.style-card output{display:block;overflow-wrap:anywhere;white-space:pre-wrap;min-height:3rem;user-select:text}
+.workspace button{min-height:44px;padding:.5rem 1rem;border:1px solid #64748b;border-radius:.5rem;cursor:pointer;font:inherit}
+.workspace button:disabled{opacity:.55;cursor:not-allowed}
+.workspace button:focus-visible,.workspace textarea:focus-visible{outline:3px solid #2563eb;outline-offset:3px}
+#tool-status{min-height:1.5em;margin:0}
+</style></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="../">Levenshtein<span>.net</span></a><div class="navlinks"><a href="../research/">Research</a><a href="../tool/" aria-current="page">Text tools</a></div></nav></header><main id="main" tabindex="-1"><h1>Fancy Text Generator</h1>
+  <p>Enter your text and copy a Unicode text style.</p>
+  <section class="workspace" aria-label="Text generator">
+    <label for="tool-input">Your text</label>
+    <textarea id="tool-input" rows="4" maxlength="5000" placeholder="Type or paste text here" aria-describedby="tool-limit"></textarea>
+    <div class="toolbar"><small id="tool-limit"><span id="tool-count">0</span> / 5,000 UTF-16 units</small><button type="button" id="tool-clear">Clear</button></div>
+    <p id="tool-status" role="status" aria-live="polite"></p>
+    <div class="results">
+      <article class="style-card"><h2>Bold</h2><output data-style="bold" for="tool-input" dir="auto"></output><button type="button" data-copy="bold" disabled aria-label="Copy bold">Copy</button></article><article class="style-card"><h2>Monospace</h2><output data-style="monospace" for="tool-input" dir="auto"></output><button type="button" data-copy="monospace" disabled aria-label="Copy monospace">Copy</button></article><article class="style-card"><h2>Fullwidth</h2><output data-style="fullwidth" for="tool-input" dir="auto"></output><button type="button" data-copy="fullwidth" disabled aria-label="Copy fullwidth">Copy</button></article>
+    </div>
+    <noscript><p>Enable JavaScript to transform your own text.</p></noscript>
+  </section>
+  <h2>How it works</h2>
+  <p>These styles use Unicode characters rather than font files. ASCII letters and digits are transformed; other characters are preserved. Some applications and screen readers may interpret styled characters differently.</p></main><footer>Levenshtein.net</footer><script>const styles=['bold','monospace','fullwidth'];const offsets={bold:[0x1d400,0x1d41a,0x1d7ce],monospace:[0x1d670,0x1d68a,0x1d7f6],fullwidth:[0xff21,0xff41,0xff10]};function transform(input,style){const [u,l,d]=offsets[style];return Array.from(input,c=>{const n=c.codePointAt(0);return n>=65&&n<=90?String.fromCodePoint(u+n-65):n>=97&&n<=122?String.fromCodePoint(l+n-97):n>=48&&n<=57?String.fromCodePoint(d+n-48):c}).join('')}
+
+const input = document.querySelector('#tool-input');
+const status = document.querySelector('#tool-status');
+const count = document.querySelector('#tool-count');
+const buttons = document.querySelectorAll('[data-copy]');
+const outputs = new Map(styles.map(style => [style, document.querySelector('output[data-style="'+style+'"]')]));
+function refresh(){
+  for(const [style,output] of outputs) output.textContent=transform(input.value,style);
+  count.textContent=String(input.value.length);
+  for(const button of buttons) button.disabled=!input.value;
+  status.textContent='';
+}
+input.addEventListener('input',refresh);
+document.querySelector('#tool-clear').addEventListener('click',()=>{input.value='';refresh();input.focus();});
+refresh();
+for(const button of buttons){
+  button.addEventListener('click',async()=>{
+    const value=outputs.get(button.dataset.copy)?.textContent??'';
+    if(!value){status.textContent='Enter text before copying.';return;}
+    try{await navigator.clipboard.writeText(value);status.textContent='Copied.';}
+    catch{status.textContent='Select the result and copy it manually.';}
+  });
+}
+</script></body></html>
