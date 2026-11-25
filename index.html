@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Levenshtein Algorithm &amp; Distance – Efficient Implementation and Fault-Tolerant Search | Levenshtein.net</title><meta name="description" content="Resources on the Levenshtein Algorithm and Levenshtein Distance, including efficient implementations, edit distance concepts, and fault-tolerant search."><style>*{box-sizing:border-box}body{margin:0;color:#172033;background:#fff;font:16px/1.65 system-ui,sans-serif}a{color:#1746bd;text-underline-offset:3px}header{border-bottom:1px solid #dce3ed}nav,main,footer{max-width:1100px;margin:auto;padding:1rem 1.25rem}nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}.brand{font-size:1.3rem;font-weight:750;text-decoration:none;color:#172033}.brand span{color:#1746bd}.navlinks{display:flex;gap:1.25rem}main{padding-block:2rem 4rem}h1,h2,h3{line-height:1.2;letter-spacing:-.025em}h1{font-size:clamp(2rem,5vw,3.5rem);max-width:22ch}h2{font-size:1.6rem}p{max-width:72ch}.eyebrow{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#1746bd;font-weight:700}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1rem}.panel{border:1px solid #dce3ed;border-radius:12px;padding:1.25rem;background:#f8fafc}.button,button{display:inline-block;border:1px solid #1746bd;border-radius:8px;padding:.65rem 1rem;background:#1746bd;color:white;font:inherit;cursor:pointer;text-decoration:none}textarea{width:100%;min-height:100px;padding:1rem;border:1px solid #75839a;border-radius:8px;font:inherit}label{display:block;font-weight:650;margin-bottom:.4rem}.result{display:flex;justify-content:space-between;align-items:center;gap:1rem;overflow-wrap:anywhere}.result output{min-width:0}.muted,footer{color:#526176}footer{border-top:1px solid #dce3ed}.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;background:white;z-index:2}:focus-visible{outline:3px solid #d97706;outline-offset:3px}article{max-width:760px}code{font-family:monospace}.actions{display:flex;gap:.75rem;flex-wrap:wrap}@media(max-width:480px){.result{align-items:flex-start}.navlinks{gap:.8rem}main{padding-top:1rem}}
+</style></head><body><a class="skip" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="./" aria-current="page">Levenshtein<span>.net</span></a><div class="navlinks"><a href="research/">Research</a><a href="tool/">Text tools</a></div></nav></header><main id="main" tabindex="-1"><article class="research-content">
+
+
+
+
+<h1>The Levenshtein-Algorithm</h1>
+
+<h2>How Levenshtein works...</h2>
+<p>The Levenshtein algorithm, also known as edit distance, measures the minimum number of edit operations required to transform one sequence into another. The standard operations are insertion, deletion, and substitution.</p>
+<p>A classical implementation uses dynamic programming. For two strings of lengths <em>m</em> and <em>n</em>, a matrix represents the edit distance between progressively longer prefixes of the two strings. The matrix is evaluated from the upper-left toward the lower-right.</p>
+<p>Moving horizontally or vertically corresponds to an insertion or deletion. A diagonal move represents either a match or a substitution. Under the standard unit-cost model, insertion, deletion, and substitution each have a cost of 1, while matching identical elements has a cost of 0.</p>
+<p>Each position is calculated from the lowest valid cost of the preceding states. The final value gives the Levenshtein distance between the two sequences.</p>
+<p>The following example compares <strong>“meilenstein”</strong> and <strong>“levenshtein”</strong>.</p>
+
+<p>More than one path through the matrix can sometimes produce the same minimum edit cost.</p>
+
+<p><strong>=</strong> Match; <strong>o</strong> Substitution; <strong>+</strong> Insertion; <strong>-</strong> Deletion.</p>
+<p>Dynamic programming provides the standard matrix formulation of Levenshtein distance, but practical implementations do not always need to store or evaluate the entire matrix in the same way. Depending on the problem constraints, implementations can reduce memory usage, restrict computation to relevant regions, or use specialized algorithms while preserving the underlying edit-distance definition.</p>
+<p>See  Levenshtein implementations  and  Levenshtein performance engineering  for modern implementation approaches and performance considerations.</p>
+
+<h2>Unicode-Aware Text Processing</h2>
+<p>Levenshtein distance is defined over sequences, which means that the representation of text matters when Unicode is involved. Depending on the implementation, a string may be processed as code units, Unicode code points, or grapheme clusters.</p>
+<p>These representations are not always equivalent. A visible character can consist of more than one Unicode code point, while normalization can produce different underlying sequences for text that appears equivalent to a reader. These distinctions can affect how edit operations and distance values are interpreted.</p>
+<p>This becomes particularly important when Levenshtein distance is applied to multilingual text, normalized strings, or text that has undergone Unicode transformations.</p>
+<ul>
+<li>Unicode &amp; Grapheme-Safe Levenshtein  — how code points, grapheme clusters, and text representation affect edit-distance computation.</li>
+<li>Unicode Text Transformations  — how normalization, transliteration, and other transformations change the sequences that string-comparison algorithms receive.</li>
+</ul>
+
+<h2>APPLICATIONS</h2>
+<ul>
+<li>Spell checking &amp; correction</li>
+<li>Fuzzy search &amp; matching</li>
+<li>Data deduplication</li>
+<li>DNA / RNA analysis</li>
+<li>Natural language processing</li>
+</ul>
+
+
+
+
+</article>
+<nav aria-label="Related resources" class="grid">
+<a href="research/">Levenshtein implementations</a>
+<a href="https://www.levenshtein.net/levenshtein_search.htm">Fault-tolerant search</a>
+<a href="https://www.levenshtein.net/levenshtein_faq.htm">Frequently asked questions</a>
+<a href="tool/">Text tools</a>
+</nav></main><footer>Levenshtein.net</footer></body></html>
